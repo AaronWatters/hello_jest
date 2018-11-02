@@ -15,12 +15,12 @@ def start_serving():
     import http.server
     PORT = 8000
     Handler = http.server.SimpleHTTPRequestHandler
-    with socketserver.TCPServer(("", PORT), Handler) as httpd:
-        print("serving at port", PORT)
-        try:
-            httpd.serve_forever()
-        except KeyboardInterrupt:
-            print("server at ", pid, " stopping.")
+    httpd = socketserver.TCPServer(("", PORT), Handler)
+    print("serving at port", PORT)
+    try:
+        httpd.serve_forever()
+    except KeyboardInterrupt:
+        print("server at ", pid, " stopping.")
 
 if __name__=="__main__":
     start_serving()
