@@ -1,0 +1,47 @@
+{
+  "name": "hello_jest",
+  "version": "1.0.0",
+  "description": "Example npm module using jest for testing.",
+  "main": "dist/index.js",
+  "dependencies": {
+    "jquery": "^3.0.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^8.0.3",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "coveralls": "^3.0.0",
+    "eslint": "^4.13.0",
+    "eslint-plugin-import": "^2.8.0",
+    "jest": "^22.4.3"
+  },
+  "scripts": {
+    "start": "babel src -D -d dist --watch",
+    "build": "babel src -D -d dist",
+    "prepare": "npm run build",
+    "test": "jest",
+    "coverage": "jest --coverage",
+    "coveralls": "jest --coverage && cat ./tests/coverage/lcov.info | coveralls",
+    "lint": "eslint src test --ignore-pattern tests/coverage*"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AaronWatters/hello_jest.git"
+  },
+  "keywords": [
+    "hello",
+    "world",
+    "jest",
+    "testing",
+    "npm",
+    "jquery",
+    "plugin"
+  ],
+  "author": "Aaron Watters",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AaronWatters/hello_jest/issues"
+  },
+  "homepage": "https://github.com/AaronWatters/hello_jest#readme"
+}
