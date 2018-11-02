@@ -1,9 +1,13 @@
 
 # `hello_jest` A hello world example of testing javascript using Jest
 
+
+[![Build Status](https://travis-ci.org/AaronWatters/hello_jest.svg?branch=master)](https://travis-ci.org/AaronWatters/hello_jest)
+[![Coverage Status](https://coveralls.io/repos/github/AaronWatters/hello_jest/badge.svg?branch=master)](https://coveralls.io/github/AaronWatters/hello_jest?branch=master)
+
 This repository is intended to provide a relatively simple and minimal example of Javascript testing.
 
-To get a build started in travis you have to push a change to the repository!
+To get a build started in travis you have to push a change to the repository!≈ß
 
 - [Using https://jestjs.io/](https://jestjs.io/) and
 - with a headless browser [https://github.com/GoogleChrome/puppeteer](https://github.com/GoogleChrome/puppeteer) 
