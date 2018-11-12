@@ -5,13 +5,14 @@ global.jQuery = function(argument) {
 };
 */
 
-require('../dist/index');
+// var index = require('../dist/index');
+import hello_jest_is_loaded from "../dist/index";
 
 describe('testing my_plugin', () => {
 
-    it('dummy0', () => {
+    it('loads the index', () => {
         //expect(true).toEqual(true);
-        expect(true).toBeTruthy();
+        expect(hello_jest_is_loaded()).toBe(true);
     });
 
     it("defines the plugin", () => {

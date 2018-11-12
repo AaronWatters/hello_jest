@@ -1,3 +1,8 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
 
 // Require jQuery only if needed.
 if (!global.jQuery) {
@@ -11,4 +16,4 @@ function hello_jest_is_loaded() {
   return true;
 }
 
-export default hello_jest_is_loaded;
+exports.default = hello_jest_is_loaded;
