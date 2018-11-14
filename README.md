@@ -47,6 +47,12 @@ test, and package the module and the module top level dependencies and so forth.
 This is the jest configuration file.  It describes the test environment (such
 as environment globals) and where to put the coverage report, among other things.
 
+### `hello_jest/jest/`
+
+This directory contains files used by jest such as
+`globals.js` which initializes the global testing
+environment for all tests.
+
 ### `hello_jest/.travis.yml`
 
 This file tells the Travis continuous integration service how to run the
