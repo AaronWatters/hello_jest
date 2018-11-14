@@ -21,7 +21,7 @@
     "parcelify": "^0.12.5"
   },
   "scripts": {
-    "build-css": "parcelify html/entry.js -c html/bundle.css",
+    "build-css": "touch html/bundle.css && parcelify html/entry.js -c html/bundle.css",
     "build-js": "browserify html/entry.js > html/bundle.js",
     "start": "npm run build-css && npm run build-js && opener html/index.html",
     "build": "babel src -D -d dist",

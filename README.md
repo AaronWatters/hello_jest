@@ -27,6 +27,11 @@ fully their significance, but I needed them to get everything working.
 This is a silly `jQuery` plugin implementation which is supposed to represent
 the main logic of the module that we want to test and publish.
 
+### `hello_jest/tests/my_plugin.test.js`
+
+These are the javascript tests to validate the plugin
+written to be run by `jest`.
+
 ### `hello_jest/src/index.js`
 
 This is the module index file used by `npm` for creating the module package.
@@ -37,20 +42,83 @@ It lists everything which should be included in the module.
 This is the `npm` package description for the module.   It describes how to build,
 test, and package the module and the module top level dependencies and so forth.
 
-### hello_jest/jest.config.js
+### `hello_jest/jest.config.js`
 
 This is the jest configuration file.  It describes the test environment (such
 as environment globals) and where to put the coverage report, among other things.
 
-### hello_jest/.travis.yml
+### `hello_jest/.travis.yml`
 
 This file tells the Travis continuous integration service how to run the
 tests and register the coverage report.
 
-### hello_jest/.babelrc
+### `hello_jest/.babelrc`
 
 This file tells the babel preprocessor how to translate javascript.
 
+### `hello_jest/.eslintrc.js`
+
+This is a configuration file for the eslint code
+quality tool.
+
+### `hello_jest/start_test_http_server.py` and `hello_jest/start_test_http_server.py`
+
+These scripts are intended to start and stop a
+simple HTTP server for end to end testing.  
+They are not currently used because end to end testing
+is not implemented.
+
+### `hello_jest/dist/`
+
+These directory contains the published content of the module
+consisting of javascript modules compiled by `babel`.
+
+### `hello_jest/html/`
+
+This directory contains a test use of the module in a vanilla
+HTML web page.  The bundled content is built using
+`parcelify` and `browserify`.
+
+
+# What are the dependencies in `package.json`
+
+There is only one non-development dependency: `jQuery` is
+the framework for the plugin in the module.
+
+### `jest`
+
+This is the testing framework used for unit tests.
+
+### `"babel-*"`
+
+These modules have something to do with the babel
+preprocessor/transpiler which is used to convert javascript
+to portable dialects.  I'm not sure they are all needed.
+
+### `coveralls`
+
+This module has something to do with measuring coverage
+and generating coverage reports and registering the reports
+with the coveralls service.
+
+### `eslint-*`
+
+Linting tools for assessing coding conventions and quality.
+
+### `browserify`
+
+This tool takes `node`-like modules organized using "imports"
+and packages them into a single bundled Javascript file for loading
+in an HTML page.
+
+### `parcelify`
+
+This tool looks for CSS files in module dependencies and bundles
+them into a single CSS file for loading in an HTML page.
+
+### `opener` 
+
+This script opens a browser to a static HTML page.
 
 
 # Background
