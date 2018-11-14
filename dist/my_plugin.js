@@ -1,3 +1,4 @@
+"use strict";
 
 // silly jquery plugin for experimentation only
 

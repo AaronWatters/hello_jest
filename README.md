@@ -5,10 +5,22 @@
 [![Build Status](https://travis-ci.org/AaronWatters/hello_jest.svg?branch=master)](https://travis-ci.org/AaronWatters/hello_jest)
 [![Coverage Status](https://coveralls.io/repos/github/AaronWatters/hello_jest/badge.svg?branch=master)](https://coveralls.io/github/AaronWatters/hello_jest?branch=master)
 
-This repository is intended to provide a relatively simple and minimal example of Javascript testing.  I hope people (like me) find it helpful when they want to create `npm` modules with
+This repository is intended to provide a relatively simple and minimal example of Javascript testing and code coverage
+for a client side Javascript module, specifically for jQuery
+plugins.
+
+I hope people (like me) find it helpful when they want to create `npm` modules with
 automated testing and coverage reports.
 
+To enable continuous integration and code coverage evaluation I registered
+this repository with the Travis CI service and the coveralls coverage
+service.
+
 # What are the files?
+
+Here are the files used in the package
+In some cases they are copied from other places and I don't understand
+fully their significance, but I needed them to get everything working.
 
 ### `hello_jest/src/my_plugin.js`
 
@@ -30,16 +42,33 @@ test, and package the module and the module top level dependencies and so forth.
 This is the jest configuration file.  It describes the test environment (such
 as environment globals) and where to put the coverage report, among other things.
 
+### hello_jest/.travis.yml
+
+This file tells the Travis continuous integration service how to run the
+tests and register the coverage report.
+
+### hello_jest/.babelrc
+
+This file tells the babel preprocessor how to translate javascript.
+
+
 
 # Background
 
 This repository is built
 
 - [Using https://jestjs.io/](https://jestjs.io/) and
-- with a headless browser [https://github.com/GoogleChrome/puppeteer](https://github.com/GoogleChrome/puppeteer) 
-for end to end tests and
 - with continuous integration using [https://travis-ci.org/](https://travis-ci.org/) and
 - with code coverage for unit tests using mocking.
+
+# Eventually
+
+I wanted to add
+
+- with a headless browser [https://github.com/GoogleChrome/puppeteer](https://github.com/GoogleChrome/puppeteer) 
+for end to end tests.
+
+But I'm giving up on that for now.  Maybe later I will return.
 
 # References
 
@@ -52,6 +81,8 @@ for end to end tests and
 - https://github.com/ollelauribostrom/travis-coveralls-example
 - https://coveralls.io/github/ollelauribostrom/travis-coveralls-example
 - https://blog.npmjs.org/post/111475741445/publishing-your-jquery-plugin-to-npm-the-quick
+- https://docs.npmjs.com/cli/link npm link for creating a local link to a package.
+- https://jaketrent.com/post/npm-install-local-files/ using tarballs.
 
 # Setting up jest with puppeteer example:
 

@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Example npm module using jest for testing.",
   "main": "dist/index.js",
+  "files": ["dist/my_plugin.js", "dist/index.js"],
   "dependencies": {
     "jquery": "^3.0.0"
   },
