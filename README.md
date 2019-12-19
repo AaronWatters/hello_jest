@@ -9,7 +9,7 @@ This repository is intended to provide a relatively simple and minimal example o
 for a client side Javascript module, specifically for jQuery
 plugins.
 
-I hope people (like me) find it helpful when they want to create `npm` modules with
+I hope people like me find it helpful when they want to create `npm` modules with
 automated testing and coverage reports.
 
 To enable continuous integration and code coverage evaluation I registered
