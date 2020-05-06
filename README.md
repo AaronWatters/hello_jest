@@ -16,6 +16,26 @@ To enable continuous integration and code coverage evaluation I registered
 this repository with the Travis CI service and the coveralls coverage
 service.
 
+# Command lines
+
+To install
+
+```
+npm install
+```
+
+To test
+
+```
+npm run test
+```
+
+To admire the sample html
+
+```
+npm start
+```
+
 # What are the files?
 
 Here are the files used in the package
