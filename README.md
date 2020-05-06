@@ -178,6 +178,7 @@ But I'm giving up on that for now.  Maybe later I will return.
 - https://docs.npmjs.com/cli/link npm link for creating a local link to a package.
 - https://jaketrent.com/post/npm-install-local-files/ using tarballs.
 - https://medium.com/touch4it/end-to-end-testing-with-puppeteer-and-jest-ec8198145321
+- https://stackoverflow.com/questions/53960303/whats-config-start-js-in-usage-example-for-jest-dev-server
 
 # Setting up jest with puppeteer example:
 
