@@ -12,6 +12,7 @@ before_install:
 - npm update
 - sudo apt-get update
 - sudo apt-get install python3
+- npm install --global http-server
 #- python3 start_test_http_server.py &
 install:
 - npm install
