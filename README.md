@@ -92,13 +92,6 @@ This file tells the babel preprocessor how to translate javascript.
 This is a configuration file for the eslint code
 quality tool.
 
-### `hello_jest/start_test_http_server.py` and `hello_jest/start_test_http_server.py`
-
-These scripts are intended to start and stop a
-simple HTTP server for end to end testing.  
-They are not currently used because end to end testing
-is not implemented.
-
 ### `hello_jest/dist/`
 
 These directory contains the published content of the module
