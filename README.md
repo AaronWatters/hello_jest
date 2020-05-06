@@ -50,8 +50,12 @@ the main logic of the module that we want to test and publish.
 
 ### `hello_jest/tests/my_plugin.test.js`
 
-These are the javascript tests to validate the plugin
-written to be run by `jest`.
+These are the javascript unit tests to validate the plugin
+written to be run by `jest`.  They do not use the headless browser.
+
+### `hello_jest/tests/headless.test.js`
+
+"End to end" tests which use a headless browser.
 
 ### `hello_jest/src/index.js`
 
