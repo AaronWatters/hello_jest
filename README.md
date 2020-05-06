@@ -18,9 +18,10 @@ service.
 
 # Command lines
 
-To install
+To install (you need http-server too, and for some reason I had to install it globally).
 
 ```
+npm install --global http-server
 npm install
 ```
 
