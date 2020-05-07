@@ -82,7 +82,9 @@ describe("headless browser tests", async () => {
         check_truthy("window.jQuery")
         console.log("string repr for window.jQuery: " + await page.evaluate(() => ("" + window.jQuery)));
         //check_truthy("window.jQuery('#target')")
-        var content = await page.evaluate(() => window.jQuery('#target').html());
+        //check_truthy("window.jQuery('#target')")
+        //check_truthy("window.jQuery('#target')")
+        var content = await page.evaluate(() => window.get_target_content());
         console.log("target content is: " + content);
         var expected_content = "<em>plugin is working</em>";
         expect(content).toBe(expected_content);
