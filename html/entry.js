@@ -11,7 +11,9 @@ require("../dist/index");
 jQuery(function(){
   var $ = jQuery;
   var y = $("#container");
-  var z = $('<div id="target">JQuery is working?</div>').appendTo(y);
+  var z = $('<div>JQuery is working?</div>').appendTo(y);
+  // set the id
+  z.attr("id", "target");
   z.plugin_functionality({
     html: "plugin is working",
     italic: true
