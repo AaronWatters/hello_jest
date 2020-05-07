@@ -51,7 +51,7 @@ describe("headless browser tests", async () => {
         // sleep a second to let the page execute javascript
         await sleep(1000);
         check_truthy("window.test_function");
-        await page.waitForFunction(() => !!(window.js_loaded));
+        await page.waitForFunction(() => !!(test_function));
         var content = await page.evaluate(() => test_function());
         check_truthy("window.test_function");
         console.log("function content is: " + content);
@@ -80,6 +80,7 @@ describe("headless browser tests", async () => {
         check_truthy("window.js_loaded");
         console.log("function eval: " + await page.evaluate(() => !!(window.js_loaded)))
         check_truthy("window.jQuery")
+        console.log("string repr for window.jQuery: " + await page.evaluate(() => ("" + window.jQuery)));
         check_truthy("window.jQuery('#target')")
         var content = await page.evaluate(() => window.jQuery('#target').html());
         console.log("target content is: " + content);
