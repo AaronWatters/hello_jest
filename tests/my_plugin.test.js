@@ -2,7 +2,7 @@
  * @jest-environment jsdom
  */
 
- // These tests don't use puppeteer/headless chrome
+ // These unit tests don't use puppeteer/headless chrome
 
 /*
 global.jQuery = function(argument) {
