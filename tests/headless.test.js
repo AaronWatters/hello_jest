@@ -74,7 +74,8 @@ describe("headless browser tests", async () => {
         check_truthy("window.jQuery")
         //return;
         console.log(" ... now waiting for js_loaded ...")
-        await page.waitForFunction(() => !!(window.js_loaded));
+        //await page.waitForFunction(() => !!(window.js_loaded));
+        await page.waitForFunction(() => !!(window.jQuery));
         check_truthy("window");
         check_truthy("window.js_loaded");
         console.log("function eval: " + await page.evaluate(() => !!(window.js_loaded)))

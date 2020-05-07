@@ -16,6 +16,8 @@ jQuery(function(){
     html: "plugin is working",
     italic: true
   });
-  window.jQuery = jQuery;
   window.js_loaded = true;
 });
+
+// put jquery in the global environment so we can use it in tests
+window.jQuery = jQuery;
