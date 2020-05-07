@@ -51,14 +51,14 @@ describe("headless browser tests", async () => {
         // sleep a second to let the page execute javascript
         await sleep(1000);
         check_truthy("window.test_function");
-        await page.waitForFunction(() => !!(test_function));
-        var content = await page.evaluate(() => test_function());
+        await page.waitForFunction(() => !!(window.test_function));
+        var content = await page.evaluate(() => window.test_function());
         check_truthy("window.test_function");
         console.log("function content is: " + content);
         var expected_content = "hi there!";
         expect(content).toBe(expected_content);
     },
-    120000, // timeout in 2 minutes...
+    //120000, // timeout in 2 minutes...
     );
 
     it("sets the html using the plugin",  async () => {
