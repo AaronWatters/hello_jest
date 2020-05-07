@@ -4,7 +4,8 @@ module.exports = {
     launch: {
         headless: process.env.HEADLESS !== 'false',
         slowMo: process.env.SLOWMO ? process.env.SLOWMO : 0,
-        devtools: true
+        devtools: true,
+        timeout: 3000000, //  5 minute timeout
     },
     //server: {
     //  command: 'node server.js',
