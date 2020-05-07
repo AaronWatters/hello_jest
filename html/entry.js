@@ -8,7 +8,7 @@ if (!global.jQuery) {
 
 require("../dist/index");
 
-jQuery(function(){
+//jQuery(function(){
   var $ = jQuery;
   var y = $("#container");
   var z = $('<div>JQuery is working?</div>').appendTo(y);
@@ -20,7 +20,7 @@ jQuery(function(){
   });
   //window.js_loaded = true;
   ready_for_tests();
-});
+//});
 
 // put jquery in the global environment so we can use it in tests
 window.jQuery = jQuery;
