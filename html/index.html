@@ -23,7 +23,12 @@
 
     function get_target_content() {
       // hack xxxxx
-      return "<em>plugin is working</em>";
+      //return "<em>plugin is working</em>";
+      var target = document.getElementById("target");
+      return target.innerHTML;
+      // end of hack xxxx
+
+      // this works fine in the console and on the Mac:
       return window.jQuery('#target').html();
     };
 
