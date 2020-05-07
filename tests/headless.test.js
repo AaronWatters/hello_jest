@@ -52,6 +52,6 @@ describe("headless browser tests", async () => {
         var expected_content = "<em>plugin is working</em>";
         expect(content).toBe(expected_content);
     },
-    //120000, // timeout in 2 minutes...
+    120000, // timeout in 2 minutes...
     );
 });
