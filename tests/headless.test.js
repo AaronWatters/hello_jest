@@ -46,7 +46,7 @@ describe("headless browser tests", async () => {
         //await jestPuppeteer.debug();
         const page = await browser.newPage();
         const url = "http://127.0.0.1:3000/html/index.html";
-        await page.goto(url);
+        await page.goto(url, {waitUntil: 'networkidle2'});
         //await jestPuppeteer.debug();
         // sleep a second to let the page execute javascript
         await sleep(1000);
@@ -65,7 +65,7 @@ describe("headless browser tests", async () => {
         //await jestPuppeteer.debug();
         const page = await browser.newPage();
         const url = "http://127.0.0.1:3000/html/index.html";
-        await page.goto(url);
+        await page.goto(url, {waitUntil: 'networkidle2'});
         //await jestPuppeteer.debug();
         // sleep a second to let the page execute javascript
         await sleep(1000);
