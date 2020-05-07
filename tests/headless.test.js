@@ -62,7 +62,7 @@ describe("headless browser tests", async () => {
         console.log("window is defined? " + wqd);
         var jsld = await page.evaluate(() => window.js_loaded);
         console.log("js_loaded gets: " + jsld);
-        return;
+        //return;
         await page.waitForFunction("window.js_loaded");
         var content = await page.evaluate("jQuery('#target').html()");
         console.log("target content is: " + content);
