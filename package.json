@@ -30,7 +30,7 @@
     "build-css": "touch html/bundle.css && parcelify html/entry.js -c html/bundle.css",
     "build-js": "browserify html/entry.js > html/bundle.js",
     "start": "npm run build-css && npm run build-js && opener html/index.html",
-    "build": "babel src -D -d dist",
+    "build": "babel src -D -d dist && npm run build-css && npm run build-js",
     "prepare": "npm run build",
     "test": "jest",
     "coverage": "jest --coverage",
