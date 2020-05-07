@@ -70,6 +70,7 @@ describe("headless browser tests", async () => {
         // sleep a second to let the page execute javascript
         await sleep(1000);
         //check_truthy("window");
+        console.log(" js_loaded before: " + await page.evaluate(async () => !!(window.js_loaded)));
         console.log(" ... now waiting for js_loaded ...")
         //await page.waitForFunction(async () => !!(window.jQuery));
         await page.waitForFunction(async () => !!(window.js_loaded));
