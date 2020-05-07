@@ -31,6 +31,12 @@ To test
 npm run test
 ```
 
+To run one test and see the browser
+
+```
+HEADLESS="false" jest -t "sets the html using the plugin"
+```
+
 To admire the sample html
 
 ```
@@ -43,61 +49,92 @@ Here are the files used in the package
 In some cases they are copied from other places and I don't understand
 fully their significance, but I needed them to get everything working.
 
-### `hello_jest/src/my_plugin.js`
+### `./src/my_plugin.js`
 
 This is a silly `jQuery` plugin implementation which is supposed to represent
 the main logic of the module that we want to test and publish.
 
-### `hello_jest/tests/my_plugin.test.js`
+### `./tests/my_plugin.test.js`
 
 These are the javascript unit tests to validate the plugin
 written to be run by `jest`.  They do not use the headless browser.
 
-### `hello_jest/tests/headless.test.js`
+Note that to run as unit tests in the presence of puppeteer
+the test script must include  the `@jest-environment jsdom` directive
+in order
+to get browser environment unit test emulation.
+
+```node
+/**
+ * @jest-environment jsdom
+ */
+
+// var index = require('../dist/index');
+import hello_jest_is_loaded from "../dist/index";
+
+describe('testing my_plugin', () => {
+
+    it('loads the index', () => {
+        //expect(true).toEqual(true);
+        expect(hello_jest_is_loaded()).toBe(true);
+    });
+    ...
+  });
+
+```
+
+### `./tests/headless.test.js`
 
 "End to end" tests which use a headless browser.
 
-### `hello_jest/src/index.js`
+### `./src/index.js`
 
 This is the module index file used by `npm` for creating the module package.
 It lists everything which should be included in the module.
 
-### `hello_jest/package.json`
+### `./package.json`
 
 This is the `npm` package description for the module.   It describes how to build,
 test, and package the module and the module top level dependencies and so forth.
 
-### `hello_jest/jest.config.js`
+### `./jest.config.js`
 
 This is the jest configuration file.  It describes the test environment (such
 as environment globals) and where to put the coverage report, among other things.
 
-### `hello_jest/jest/`
+### `./jest-puppeteer.config.js`
 
-This directory contains files used by jest such as
-`globals.js` which initializes the global testing
-environment for all tests.
+This file configures the puppeteer library and defines how to launch the headless
+browser for end to end testing,
 
-### `hello_jest/.travis.yml`
+### `./jest/globals.js`
+
+Javascript file with the global test environment definitions for jest.
+
+### `./jest/globalSetup.js` and `./jest/globalTeardown.js`
+
+These javascript files set up the HTTP server and the Puppeteer library for end-to-end testing.
+
+### `./.travis.yml`
 
 This file tells the Travis continuous integration service how to run the
 tests and register the coverage report.
 
-### `hello_jest/.babelrc`
+### `./.babelrc`
 
 This file tells the babel preprocessor how to translate javascript.
 
-### `hello_jest/.eslintrc.js`
+### `./.eslintrc.js`
 
 This is a configuration file for the eslint code
 quality tool.
 
-### `hello_jest/dist/`
+### `./dist/`
 
 These directory contains the published content of the module
 consisting of javascript modules compiled by `babel`.
 
-### `hello_jest/html/`
+### `./html/`
 
 This directory contains a test use of the module in a vanilla
 HTML web page.  The bundled content is built using
