@@ -15,6 +15,7 @@
 
   <script>
     window.js_loaded = false;
+    window.jQuery = null;
 
     function test_function() {
       return "hi there!";
@@ -26,8 +27,6 @@
   <script src="bundle.js"></script>
 
   <script>
-    // pull jQuery into the global context so we can use it in tests
-    jQuery = require('jquery');
     window.js_loaded = true;
   </script>
 </body>

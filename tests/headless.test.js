@@ -33,6 +33,15 @@ describe("headless browser tests", async () => {
         });
     };
 
+    async function check_truthy(js_expression_str) {
+        var is_truthy = await page.evaluate("!!(" + js_expression_str + ")");
+        if (is_truthy) {
+            console.log("truthy: " + js_expression_str);
+        } else {
+            console.log("FALSY: " + js_expression_str);
+        }
+    };
+
     it("calls the test function",  async () => {
         //await jestPuppeteer.debug();
         const page = await browser.newPage();
@@ -41,8 +50,10 @@ describe("headless browser tests", async () => {
         //await jestPuppeteer.debug();
         // sleep a second to let the page execute javascript
         await sleep(1000);
-        await page.waitForFunction("window.js_loaded");
-        var content = await page.evaluate("test_function()");
+        check_truthy("window.test_function");
+        await page.waitForFunction(() => !!(window.js_loaded));
+        var content = await page.evaluate(() => test_function());
+        check_truthy("window.test_function");
         console.log("function content is: " + content);
         var expected_content = "hi there!";
         expect(content).toBe(expected_content);
@@ -58,17 +69,22 @@ describe("headless browser tests", async () => {
         //await jestPuppeteer.debug();
         // sleep a second to let the page execute javascript
         await sleep(1000);
-        var wqd = await page.evaluate("!!window");
-        console.log("window is defined? " + wqd);
-        var jsld = await page.evaluate(() => window.js_loaded);
-        console.log("js_loaded gets: " + jsld);
+        check_truthy("window");
+        check_truthy("window.js_loaded")
+        check_truthy("window.jQuery")
         //return;
-        await page.waitForFunction("window.js_loaded");
-        var content = await page.evaluate("jQuery('#target').html()");
+        console.log(" ... now waiting for js_loaded ...")
+        await page.waitForFunction(() => !!(window.js_loaded));
+        check_truthy("window");
+        check_truthy("window.js_loaded");
+        console.log("function eval: " + await page.evaluate(() => !!(window.js_loaded)))
+        check_truthy("window.jQuery")
+        check_truthy("window.jQuery('#target')")
+        var content = await page.evaluate(() => window.jQuery('#target').html());
         console.log("target content is: " + content);
         var expected_content = "<em>plugin is working</em>";
         expect(content).toBe(expected_content);
     },
-    120000, // timeout in 2 minutes...
+    //120000, // timeout in 2 minutes...
     );
 });

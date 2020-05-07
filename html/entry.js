@@ -16,5 +16,6 @@ jQuery(function(){
     html: "plugin is working",
     italic: true
   });
+  window.jQuery = jQuery;
   window.js_loaded = true;
 });
