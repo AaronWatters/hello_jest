@@ -52,8 +52,8 @@ describe("headless browser tests", async () => {
         await sleep(1000);
         check_truthy("window.test_function");
         //await page.waitForFunction(() => !!(window.test_function));
-        await page.waitForFunction(() => !!(window.jQuery));
-        var content = await page.evaluate(() => window.test_function());
+        await page.waitForFunction(async () => !!(window.jQuery));
+        var content = await page.evaluate(async () => window.test_function());
         check_truthy("window.test_function");
         console.log("function content is: " + content);
         var expected_content = "hi there!";
@@ -76,16 +76,17 @@ describe("headless browser tests", async () => {
         //return;
         console.log(" ... now waiting for js_loaded ...")
         //await page.waitForFunction(() => !!(window.js_loaded));
-        await page.waitForFunction(() => !!(window.jQuery));
+        await page.waitForFunction(async () => !!(window.jQuery));
         check_truthy("window");
         check_truthy("window.js_loaded");
-        console.log("function eval: " + await page.evaluate(() => !!(window.js_loaded)))
+        console.log("function eval: " + await page.evaluate(async () => !!(window.js_loaded)))
         check_truthy("window.jQuery")
-        console.log("string repr for window.jQuery: " + await page.evaluate(() => ("" + window.jQuery)));
+        console.log("string repr for window.jQuery: " + await page.evaluate(async () => ("" + window.jQuery)));
         //check_truthy("window.jQuery('#target')")
         //check_truthy("window.jQuery('#target')")
         //check_truthy("window.jQuery('#target')")
-        var content = await page.evaluate(() => get_target_content());
+        console.log("container: " + await page.document)
+        var content = await page.evaluate(async () => get_target_content());
         console.log("target content is: " + content);
         var expected_content = "<em>plugin is working</em>";
         expect(content).toBe(expected_content);
