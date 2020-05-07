@@ -33,6 +33,23 @@ describe("headless browser tests", async () => {
         });
     };
 
+    it("calls the test function",  async () => {
+        //await jestPuppeteer.debug();
+        const page = await browser.newPage();
+        const url = "http://127.0.0.1:3000/html/index.html";
+        await page.goto(url);
+        //await jestPuppeteer.debug();
+        // sleep a second to let the page execute javascript
+        await sleep(1000);
+        await page.waitForFunction("window.js_loaded");
+        var content = await page.evaluate("test_function()");
+        console.log("function content is: " + content);
+        var expected_content = "hi there!";
+        expect(content).toBe(expected_content);
+    },
+    120000, // timeout in 2 minutes...
+    );
+
     it("sets the html using the plugin",  async () => {
         //await jestPuppeteer.debug();
         const page = await browser.newPage();
@@ -45,7 +62,7 @@ describe("headless browser tests", async () => {
         console.log("window is defined? " + wqd);
         var jsld = await page.evaluate(() => window.js_loaded);
         console.log("js_loaded gets: " + jsld);
-        //return;
+        return;
         await page.waitForFunction("window.js_loaded");
         var content = await page.evaluate("jQuery('#target').html()");
         console.log("target content is: " + content);
