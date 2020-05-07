@@ -88,7 +88,7 @@ describe("headless browser tests", async () => {
         console.log("container: " + await page.document)
         var content = await page.evaluate(async () => get_target_content());
         console.log("target content is: " + content);
-        var expected_content = "<em>plugin is working</em>";
+        var expected_content = "plugin is working";
         expect(content).toBe(expected_content);
     },
     120000, // timeout in 2 minutes...
