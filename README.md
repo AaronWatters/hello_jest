@@ -18,26 +18,26 @@ service.
 
 # Command lines
 
-To install (you need http-server too, and for some reason I had to install it globally).
+To install (you need `http-server` too, and for some reason I had to install it globally):
 
 ```
 npm install --global http-server
 npm install
 ```
 
-To test
+To test:
 
 ```
 npm run test
 ```
 
-To run one test and see the browser
+To run one end-to-end test and see the browser:
 
 ```
 HEADLESS="false" jest -t "sets the html using the plugin"
 ```
 
-To admire the sample html
+To admire the sample html:
 
 ```
 npm start
