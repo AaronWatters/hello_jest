@@ -1,11 +1,12 @@
 
+
+window.js_loaded = false;
+
 if (!global.jQuery) {
   global.jQuery = require('jquery');
 }
 
 require("../dist/index");
-
-jQuery.js_loaded = false;
 
 jQuery(function(){
   var $ = jQuery;
@@ -15,5 +16,5 @@ jQuery(function(){
     html: "plugin is working",
     italic: true
   });
-  jQuery.js_loaded = true;
+  window.js_loaded = true;
 });

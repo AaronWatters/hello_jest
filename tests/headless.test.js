@@ -41,16 +41,17 @@ describe("headless browser tests", async () => {
         //await jestPuppeteer.debug();
         // sleep a second to let the page execute javascript
         await sleep(1000);
-        var jqd = await page.evaluate("!!jQuery");
-        console.log("jquery is defined? " + jqd);
-        var jsld = await page.evaluate('jQuery.js_loaded');
+        var wqd = await page.evaluate("!!window");
+        console.log("window is defined? " + wqd);
+        var jsld = await page.evaluate(() => window.js_loaded);
         console.log("js_loaded gets: " + jsld);
-        await page.waitForFunction('jQuery.js_loaded');
+        //return;
+        await page.waitForFunction("window.js_loaded");
         var content = await page.evaluate("jQuery('#target').html()");
         console.log("target content is: " + content);
         var expected_content = "<em>plugin is working</em>";
         expect(content).toBe(expected_content);
     },
-    120000, // timeout in 2 minutes...
+    //120000, // timeout in 2 minutes...
     );
 });
