@@ -71,7 +71,8 @@ describe("headless browser tests", async () => {
         await sleep(1000);
         //check_truthy("window");
         console.log(" ... now waiting for js_loaded ...")
-        await page.waitForFunction(async () => !!(window.jQuery));
+        //await page.waitForFunction(async () => !!(window.jQuery));
+        await page.waitForFunction(async () => !!(window.js_loaded));
         var content = await page.evaluate(async () => window.jQuery('#target').text());
         //console.log("target content is: " + content);
         var expected_content = "plugin is working";
