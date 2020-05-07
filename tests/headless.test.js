@@ -51,7 +51,8 @@ describe("headless browser tests", async () => {
         // sleep a second to let the page execute javascript
         await sleep(1000);
         check_truthy("window.test_function");
-        await page.waitForFunction(() => !!(window.test_function));
+        //await page.waitForFunction(() => !!(window.test_function));
+        await page.waitForFunction(() => !!(window.jQuery));
         var content = await page.evaluate(() => window.test_function());
         check_truthy("window.test_function");
         console.log("function content is: " + content);
@@ -84,7 +85,7 @@ describe("headless browser tests", async () => {
         //check_truthy("window.jQuery('#target')")
         //check_truthy("window.jQuery('#target')")
         //check_truthy("window.jQuery('#target')")
-        var content = await page.evaluate(() => window.get_target_content());
+        var content = await page.evaluate(() => get_target_content());
         console.log("target content is: " + content);
         var expected_content = "<em>plugin is working</em>";
         expect(content).toBe(expected_content);
