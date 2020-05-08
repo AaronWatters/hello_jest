@@ -1,5 +1,5 @@
 
-// these tests use puppeteer and headless chrome using the default jest-environment configuration.
+// These end-to-end tests use puppeteer and headless chrome using the default jest-environment configuration.
 
 describe("headless browser tests", async () => {
     it("gets the browser version",  async () => {
@@ -47,12 +47,7 @@ describe("headless browser tests", async () => {
         const page = await browser.newPage();
         const url = "http://127.0.0.1:3000/html/index.html";
         await page.goto(url, {waitUntil: 'networkidle2'});
-        //await jestPuppeteer.debug();
-        // sleep a second to let the page execute javascript
-        //await sleep(1000);
-        //check_truthy("window.test_function");
-        //await page.waitForFunction(() => !!(window.test_function));
-        // Wait for the jquery to become available indicating that javascript has loaded
+        // Wait for jQuery to become available indicating that javascript has loaded
         await page.waitForFunction(async () => !!(window.jQuery));
         var content = await page.evaluate(async () => window.test_function());
         //console.log("function content is: " + content);
@@ -67,11 +62,6 @@ describe("headless browser tests", async () => {
         const page = await browser.newPage();
         const url = "http://127.0.0.1:3000/html/index.html";
         await page.goto(url, {waitUntil: 'networkidle2'});
-        //await jestPuppeteer.debug();
-        // sleep a second to let the page execute javascript
-        //await sleep(1000);
-        //check_truthy("window");
-        //console.log(" js_loaded before: " + await page.evaluate(async () => !!(window.js_loaded)));
         //console.log(" ... now waiting for window.jQuery ...")
         await page.waitForFunction(async () => !!(window.jQuery));
         //console.log(" ... now awaiting window.jQuery.ready_for_tests")

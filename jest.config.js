@@ -2,18 +2,20 @@
 module.exports = {
     verbose: true,
     preset: "jest-puppeteer",
-    globals: {
-      URL: "http://localhost:8080"
-    },
+    // this is needed by the unit tests for some reason.
     testURL: "http://localhost:8000/",
+    
     "setupFiles": [
       "./jest/globals.js"
     ], 
+
+   // where to put the code coverage reports.
    "coverageDirectory": "./tests/coverage",
 
    "coveragePathIgnorePatterns": [
       "./jest",
     ],
+
     // A path to a module which exports an async function that is triggered once before all test suites
     "globalSetup": "./jest/globalSetup.js",
   
