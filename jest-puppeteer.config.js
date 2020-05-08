@@ -8,8 +8,4 @@ module.exports = {
         timeout: 3000000, //  5 minute timeout
         args: ["--no-sandbox"],   // don't use a sandbox
     },
-    //server: {
-    //  command: 'node server.js',
-    //  port: 4444,
-    //},
 }

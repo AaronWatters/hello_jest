@@ -8,7 +8,7 @@ if (!global.jQuery) {
 
 require("../dist/index");
 
-//jQuery(function(){
+jQuery(function(){
   var $ = jQuery;
   var y = $("#container");
   var z = $('<div>JQuery is working?</div>').appendTo(y);
@@ -18,10 +18,11 @@ require("../dist/index");
     html: "plugin is working",
     italic: true
   });
-  //window.js_loaded = true;
-  ready_for_tests();
-//});
+  
+  // make sure jquery is in the global environment so we can use it in tests
+  window.jQuery = jQuery;
 
-// put jquery in the global environment so we can use it in tests
-window.jQuery = jQuery;
-window.jQuery.ready_for_tests = true;
+  // Flag that we are ready for testing (observed by end-to-end tests).
+  window.jQuery.ready_for_tests = true;
+});
+

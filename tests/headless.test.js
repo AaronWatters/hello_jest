@@ -49,10 +49,11 @@ describe("headless browser tests", async () => {
         await page.goto(url, {waitUntil: 'networkidle2'});
         //await jestPuppeteer.debug();
         // sleep a second to let the page execute javascript
-        await sleep(1000);
+        //await sleep(1000);
         //check_truthy("window.test_function");
         //await page.waitForFunction(() => !!(window.test_function));
-        await page.waitForFunction(async () => !!(window.jQuery));
+        // Wait for the test function to become available.
+        await page.waitForFunction(async () => !!(window.test_function));
         var content = await page.evaluate(async () => window.test_function());
         //console.log("function content is: " + content);
         var expected_content = "hi there!";
@@ -68,14 +69,14 @@ describe("headless browser tests", async () => {
         await page.goto(url, {waitUntil: 'networkidle2'});
         //await jestPuppeteer.debug();
         // sleep a second to let the page execute javascript
-        await sleep(1000);
+        //await sleep(1000);
         //check_truthy("window");
-        console.log(" js_loaded before: " + await page.evaluate(async () => !!(window.js_loaded)));
-        console.log(" ... now waiting for window.jQuery ...")
+        //console.log(" js_loaded before: " + await page.evaluate(async () => !!(window.js_loaded)));
+        //console.log(" ... now waiting for window.jQuery ...")
         await page.waitForFunction(async () => !!(window.jQuery));
-        console.log(" ... now awaiting window.jQuery.ready_for_tests")
+        //console.log(" ... now awaiting window.jQuery.ready_for_tests")
         await page.waitForFunction(async () => !!(window.jQuery.ready_for_tests));
-        //await page.waitForFunction(async () => !!(window.js_loaded));
+        // Validate that the plugin code executed.
         var content = await page.evaluate(async () => window.jQuery('#target').text());
         //console.log("target content is: " + content);
         var expected_content = "plugin is working";
