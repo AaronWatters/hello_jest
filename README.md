@@ -1,24 +1,63 @@
 
-# `hello_jest` A hello world example of testing javascript using Jest
+# `hello_jest` A hello world example of unit testing and end-to-end testing of Javascript using Jest
 
 
 [![Build Status](https://travis-ci.org/AaronWatters/hello_jest.svg?branch=master)](https://travis-ci.org/AaronWatters/hello_jest)
 [![Coverage Status](https://coveralls.io/repos/github/AaronWatters/hello_jest/badge.svg?branch=master)](https://coveralls.io/github/AaronWatters/hello_jest?branch=master)
 
-This repository is intended to provide a relatively simple and minimal example of Javascript testing and code coverage
+This repository provides a relatively simple and minimal example of Javascript testing and code coverage
 for a client side Javascript module, specifically for jQuery
-plugins.
+plugins.  It features
 
-I hope people like me find it helpful when they want to create `npm` modules with
+- **Unit tests** which make use of **mocked web environments**.
+- **End-to-end integration tests** which make use of real web environments by using a **headless browser**.
+
+I hope people like me find these examples helpful when they want to create `npm` modules with
 automated testing and coverage reports.
 
-To enable continuous integration and code coverage evaluation I registered
-this repository with the Travis CI service and the coveralls coverage
-service.
+The repository illustrates how to use the following technologies:
 
+- <a href="https://jestjs.io/">The Jest Javascript testing framework (https://jestjs.io/).</a>
+
+- <a href="https://github.com/puppeteer/puppeteer">The 
+puppeteer Headless Chrome Node.js API (https://github.com/puppeteer/puppeteer).</a>
+
+- <a href="https://github.com/smooth-code/jest-puppeteer">The jest-puppeteer integration helper module
+(https://github.com/smooth-code/jest-puppeteer).</a>
+
+- <a href="https://learn.jquery.com/plugins/basic-plugin-creation/">jQuery and how to build a jQuery plugin
+(https://learn.jquery.com/plugins/basic-plugin-creation/).</a>
+
+- Various other technologies (`babel, browserify, opener, parcelify, http-server...`) which I needed to get
+everything working.  
+
+The techniques used were here adapted from examples linked below in the References section.
+Thanks everyone!
+
+To enable continuous integration and code coverage evaluation I registered
+this repository with 
+
+- <a href="https://travis-ci.org/github/AaronWatters/hello_jest">- 
+The Travis continuous integration service (https://travis-ci.org/github/AaronWatters/hello_jest)</a> and 
+
+- <a href="https://coveralls.io/github/AaronWatters/hello_jest?branch=master">
+The coveralls code coverage service (https://coveralls.io/github/AaronWatters/hello_jest?branch=master).</a>
+
+# Prerequisites
+
+To run the tests in this package you will need a recent version of 
+<a href="https://nodejs.org/">node (https://nodejs.org)</a> and 
+<a href="https://www.npmjs.com/">npm (https://www.npmjs.com/)</a> installed on your computer.
+```
+$ node --version
+v10.13.0
+$ npm --version
+6.14.4
+```
+ 
 # Command lines
 
-To install (you need `http-server` too, and for some reason I had to install it globally):
+Before running the tests you need to install the package development dependencies. You need `http-server` too, and for some reason I had to install it globally.  Install them like this:
 
 ```
 npm install --global http-server
@@ -48,50 +87,73 @@ npm start
 
 Here are the files used in the package
 In some cases they are copied from other places and I don't understand
-fully their significance, but I needed them to get everything working.
+fully their significance, but I seemed to need them to get everything working.
+
+## Functionality and Test Files
+
+The central files of the package are the files that define
+the functionality to be tested and the tests themselves, as listed below.
 
 ### `./src/my_plugin.js`
 
 This is a silly `jQuery` plugin implementation which is supposed to represent
-the main logic of the module that we want to test and publish.
+the main logic of the module that we want to test and publish.  It depends on 
+<a href="https://jquery.com/">jQuery</a>,
+and so is not completely trivial.
 
 ### `./tests/my_plugin.test.js`
 
-These are the javascript unit tests to validate the plugin
+These are the javascript unit tests to validate the plugin,
 written to be run by `jest`.  They do not use the headless browser.
+As unit tests they test the plugin code directly in relative isolation for example
+directly calling:
+```
+        var elt = jQuery("<b>test</b>");
+        elt.plugin_functionality({html: "whoop", italic: true});
+```
 
-Note that to run as unit tests in the presence of puppeteer
-the test script must include  the `@jest-environment jsdom` directive
-in order
-to get browser environment unit test emulation.
+Note that to run as unit tests when `jest` is configured to run a headless browser using `puppeteer`
+the test script must include  the `@jest-environment jsdom` directive.
+The directive instructs
+`jest` to load browser environment unit test emulation instead of using the headless browser.
+The directive should be placed at the top of the unit test code file like this:
 
 ```node
 /**
  * @jest-environment jsdom
  */
 
-// var index = require('../dist/index');
 import hello_jest_is_loaded from "../dist/index";
 
 describe('testing my_plugin', () => {
 
     it('loads the index', () => {
-        //expect(true).toEqual(true);
         expect(hello_jest_is_loaded()).toBe(true);
     });
     ...
   });
-
 ```
 
 ### `./tests/headless.test.js`
 
-"End to end" tests which use a headless browser.
+These are "end to end" tests which use a headless browser.
+They load a test page in a real browser context and then query the contents
+of the page to see if the code in the page and javascript loaded by the page
+ran correctly.  These tests interact with javascript on the loaded
+pages indirectly using the `puppeteer` APIs such as:
+```
+        var content = await page.evaluate(async () => window.jQuery('#target').text());
+```
+
+## Other infrastructure files
+
+In addition to the functionality and the tests, quite a few additional
+files define how to set up the package and the testing environment, as listed below.
 
 ### `./src/index.js`
 
 This is the module index file used by `npm` for creating the module package.
-It lists everything which should be included in the module.
+It lists all the javascript components which should be included in the module.
 
 ### `./package.json`
 
@@ -114,7 +176,7 @@ Javascript file with the global test environment definitions for jest.
 
 ### `./jest/globalSetup.js` and `./jest/globalTeardown.js`
 
-These javascript files set up the HTTP server and the Puppeteer library for end-to-end testing.
+These javascript files set up and tear down the HTTP server and the Puppeteer service for end-to-end testing.
 
 ### `./.travis.yml`
 
@@ -135,21 +197,51 @@ quality tool.
 These directory contains the published content of the module
 consisting of javascript modules compiled by `babel`.
 
-### `./html/`
+## The test server root `./html/`
 
+The end-to-end tests and `npm run start` load HTTP artifacts from the
+`./html/` root folder which contains both static files and files built using `npm run build`.
 This directory contains a test use of the module in a vanilla
 HTML web page.  The bundled content is built using
 `parcelify` and `browserify`.
 
+### `./html/index.html`
 
-# What are the dependencies in `package.json`
+This is the test page loaded by `npm run start` and the end-to-end tests.
+
+### `./html/entry.js`
+
+This defines the javascript environment loaded into the `index` page.  It is converted
+to `bundle.js` during the build process.
+
+### `./html/bundle.css` and `./html/bundle.js`
+
+These are the bundled CSS and Javascript files loaded by the `index` page.  They are
+created during the build process.
+
+
+# What are the dependencies in `package.json`?
 
 There is only one non-development dependency: `jQuery` is
-the framework for the plugin in the module.
+the framework for the plugin in the module.  The development dependencies are discussed below.
 
 ### `jest`
 
 This is the testing framework used for unit tests.
+
+### `puppeteer`
+
+The puppeteer library controls the headless browser during end-to-end testing.
+
+### `jest-puppeteer`
+
+This library provides methods for invoking `puppeteer` functionality from `jest` test suites.
+
+### `jest-dev-server`
+
+This library implements logic that allows `jest` to set up and tear down an HTTP server
+used for end-to-end tests automatically.  Note that the library does not itself implement
+the server -- here configure the library to use the external `http-server` node script to launch the server.
 
 ### `"babel-*"`
 
@@ -180,25 +272,8 @@ them into a single CSS file for loading in an HTML page.
 
 ### `opener` 
 
-This script opens a browser to a static HTML page.
+This script opens a browser to a static HTML page.  It is used by `npm run start`.
 
-
-# Background
-
-This repository is built
-
-- [Using https://jestjs.io/](https://jestjs.io/) and
-- with continuous integration using [https://travis-ci.org/](https://travis-ci.org/) and
-- with code coverage for unit tests using mocking.
-
-# Eventually
-
-I wanted to add
-
-- with a headless browser [https://github.com/GoogleChrome/puppeteer](https://github.com/GoogleChrome/puppeteer) 
-for end to end tests.
-
-But I'm giving up on that for now.  Maybe later I will return.
 
 # References
 
@@ -215,15 +290,3 @@ But I'm giving up on that for now.  Maybe later I will return.
 - https://jaketrent.com/post/npm-install-local-files/ using tarballs.
 - https://medium.com/touch4it/end-to-end-testing-with-puppeteer-and-jest-ec8198145321
 - https://stackoverflow.com/questions/53960303/whats-config-start-js-in-usage-example-for-jest-dev-server
-
-# Setting up jest with puppeteer example:
-
-```
-  374  git clone https://github.com/xfumihiro/jest-puppeteer-example.git
-  376  cd jest-puppeteer-example/
-  377  node install
-  382  npm install yarn -g
-  384  yarn add jest-puppeteer
-  390  npm install jest -g
-  391  jest
-```
