@@ -52,8 +52,8 @@ describe("headless browser tests", async () => {
         //await sleep(1000);
         //check_truthy("window.test_function");
         //await page.waitForFunction(() => !!(window.test_function));
-        // Wait for the test function to become available.
-        await page.waitForFunction(async () => !!(window.test_function));
+        // Wait for the jquery to become available indicating that javascript has loaded
+        await page.waitForFunction(async () => !!(window.jQuery));
         var content = await page.evaluate(async () => window.test_function());
         //console.log("function content is: " + content);
         var expected_content = "hi there!";
