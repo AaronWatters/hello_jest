@@ -6,8 +6,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/AaronWatters/hello_jest/badge.svg?branch=master)](https://coveralls.io/github/AaronWatters/hello_jest?branch=master)
 
 This repository provides a relatively simple and minimal example of Javascript testing and code coverage
-for a client side Javascript module, specifically for jQuery
-plugins.  It features
+for a client side Javascript module, specifically for jQuery plugins.  It features
 
 - **Unit tests** which make use of **mocked web environments**.
 - **End-to-end integration tests** which make use of real web environments by using a **headless browser**.
