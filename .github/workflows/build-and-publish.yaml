@@ -46,6 +46,7 @@ jobs:
       - name: Attache l'archive à la "release" précédemment créée
         uses: softprops/action-gh-release@v1
         with:
+          tag_name: ${{ steps.vars.outputs.sha_short }}
           files: artifacts.tar.gz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
