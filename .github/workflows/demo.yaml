@@ -1,6 +1,6 @@
 name: Demo
 run-name: ${{ github.actor }} is testing out GitHub Actions
-on: [push, workflow_dispatch]
+on: [workflow_dispatch]
 jobs:
   GA-Demo:
     runs-on: ubuntu-latest
