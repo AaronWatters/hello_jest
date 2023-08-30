@@ -1,0 +1,18 @@
+name: Demo
+run-name: ${{ github.actor }} is testing out GitHub Actions
+on: [push, workflow_dispatch]
+jobs:
+  GA-Demo:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Job triggered by a ${{ github.event_name }}."
+      - run: echo "Job now running on a ${{ runner.os }} server."
+      - run: echo "Name of the branch is ${{ github.ref }}."
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - run: echo "${{ github.repository }} cloned to the runner."
+      - run: echo "Workflow ready to test your code."
+      - name: List files in the repository
+        run: |
+          ls ${{ github.workspace }}
+      - run: echo "This job's status is ${{ job.status }}."

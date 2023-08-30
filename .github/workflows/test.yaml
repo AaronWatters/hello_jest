@@ -1,0 +1,22 @@
+name: Jest Test on pull requests
+on:
+  pull_request:
+    branches:
+      - main
+jobs:
+  test-jest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupère le code du repository
+        uses: actions/checkout@v2
+      - name: Mets en place NodeJS pour l'exécution \
+          des tests
+        uses: actions/setup-node@v2
+        with:
+          node-version: 20
+      - name: Installe les dépendences sans les mettres à jour
+        run: npm ci
+      - name: Installe http-server (voir README.md)
+        run: npm install -g http-server
+      - name: Lance les tests de Jest
+        run: npm run test

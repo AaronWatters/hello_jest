@@ -1,0 +1,20 @@
+name: Tests the compilation of the program on pull requests
+on:
+  pull_request:
+    branches:
+      - main
+jobs:
+  test-compilation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupère le code du repository
+        uses: actions/checkout@v2
+      - name: Mets en place NodeJS pour l'exécution \
+          des tests
+        uses: actions/setup-node@v2
+        with:
+          node-version: 20
+      - name: Installe les dépendences sans les mettres à jour
+        run: npm ci
+      - name: Lance la compilation du programme
+        run: npm run build

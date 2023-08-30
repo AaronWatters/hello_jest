@@ -1,0 +1,48 @@
+name: Build and Publish
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupère le code du repository
+        uses: actions/checkout@v2
+      - name: Mets en place NodeJS pour la compilation
+        uses: actions/setup-node@v2
+        with:
+          node-version: 20
+      - name: Installe les dépendences
+        run: npm ci
+      - name: Compile le projet
+        run: npm start build
+      - name: Archive les dossiers html et dist dans
+                un fichier tar.gz
+        run: |
+          mkdir artifacts
+          mv html artifacts/html
+          mv dist artifacts/dist
+          tar -czvf artifacts.tar.gz artifacts
+      - name: Créé la "release" sur Github
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.sha }}
+          release_name: Release ${{ github.sha }}
+          draft: false
+          prerelease: false
+      - name: Téléverse l'archive des dossiers html et
+                dist
+        uses: actions/upload-artifact@v2
+        with:
+          name: release-artifacts
+          path: artifacts.tar.gz
+      - name: Attache l'archive à la "release" précédemment créée
+        uses: softprops/action-gh-release@v1
+        with:
+          files: artifacts.tar.gz
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
