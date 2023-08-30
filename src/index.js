@@ -8,7 +8,7 @@ if (!global.jQuery) {
 require("./my_plugin")
 
 function hello_jest_is_loaded() {
-  return true;
+  return false;
 }
 
 export default hello_jest_is_loaded;
