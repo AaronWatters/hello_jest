@@ -1,7 +1,6 @@
 // jest.config.js
 module.exports = {
     verbose: true,
-    preset: "jest-puppeteer",
     // this is needed by the unit tests for some reason.
     testURL: "http://localhost:8000/",
     

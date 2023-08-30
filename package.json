@@ -21,10 +21,8 @@
     "eslint-plugin-import": "^2.8.0",
     "jest": "^22.4.3",
     "jest-dev-server": "^4.4.0",
-    "jest-puppeteer": "^4.4.0",
     "opener": "^1.4.0",
-    "parcelify": "^0.12.5",
-    "puppeteer": "^3.0.2"
+    "parcelify": "^0.12.5"
   },
   "scripts": {
     "build-css": "touch html/bundle.css && parcelify html/entry.js -c html/bundle.css",
