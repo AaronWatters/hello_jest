@@ -21,7 +21,6 @@
     "eslint-plugin-import": "^2.8.0",
     "jest": "^22.4.3",
     "jest-dev-server": "^4.4.0",
-    "opener": "^1.4.0",
     "parcelify": "^0.12.5"
   },
   "scripts": {

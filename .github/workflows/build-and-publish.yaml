@@ -16,7 +16,7 @@ jobs:
       - name: Installe les dépendences
         run: npm ci
       - name: Compile le projet
-        run: npm start build
+        run: npm run build
       - name: Archive les dossiers html et dist dans
                 un fichier tar.gz
         run: |
