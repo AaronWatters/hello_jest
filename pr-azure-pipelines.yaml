@@ -28,7 +28,7 @@ steps:
   - task: ArtifactoryNpm@2
     inputs:
       command: 'install'
-      artifactoryService: 'girocicd.jfrog.io'
+      artifactoryService: 'girocicd.npm.remote.jfrog.io'
       sourceRepo: 'dailyweb-npm-remote'
       workingFolder: '/'
       collectBuildInfo: true
