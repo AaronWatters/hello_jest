@@ -49,6 +49,10 @@ steps:
       npm run build
     displayName: 'npm build'
 
+  - script: |
+      npm run test
+    displayName: 'npm test'
+
   - task: SonarCloudPublish@1
     inputs:
       pollingTimeoutSec: '300'
