@@ -43,14 +43,17 @@ steps:
         # Additional properties that will be passed to the scanner, 
         # Put one key=value per line, example:
         # sonar.exclusions=**/*.bin
-        # test
+        sonar.sources=.
+        sonar.exclusions=node_modules/**/*, reports/**/*
 
   - script: |
       npm run build
+      ls -la
     displayName: 'npm build'
 
   - script: |
       npm run test
+      ls -la
     displayName: 'npm test'
 
   - task: SonarCloudPublish@1
@@ -62,7 +65,7 @@ steps:
     displayName: 'Archive files'
     inputs:
       rootFolderOrFile: '$(Build.Repository.LocalPath)'
-      includeRootFolder: False
+      includeRootFolder: True
       verbose: true
 
   - task: PublishBuildArtifacts@1
