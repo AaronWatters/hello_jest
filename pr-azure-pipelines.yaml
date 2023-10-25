@@ -28,7 +28,7 @@ steps:
   - task: ArtifactoryNpm@2
     inputs:
       command: 'install'
-      artifactoryService: 'girocicd.npm.remote.jfrog.io'
+      artifactoryService: 'girocicd.jfrog.io'
       sourceRepo: 'dailyweb-npm-remote'
       workingFolder: '/'
       collectBuildInfo: true
@@ -38,6 +38,33 @@ steps:
   # - script: |
   #     npm install
   #   displayName: 'npm install'
+
+  # - task: JFrogNpm@1
+  #   inputs:
+  #   # Resolve dependencies from JFrog Artifactory
+  #     command: 'install'
+  #     # Configure JFrog Artifactory repositories
+  #     artifactoryConnection: 'girocicd'
+  #     sourceRepo: 'dailyweb-npm'
+  #     collectBuildInfo: true
+  #     threads: '1'
+  #     buildName: '$(Build.DefinitionName)'
+  #     buildNumber: '$(Build.BuildNumber)'
+  # - task: JFrogNpm@1
+  #   inputs:
+  #   # Deploy *.tar.gz to JFrog Artifactory
+  #     command: 'pack and publish'
+  #     artifactoryConnection: 'girocicd'
+  #     targetRepo: 'dailyweb-npm'
+  #     collectBuildInfo: true
+  #     buildName: '$(Build.DefinitionName)'
+  #     buildNumber: '$(Build.BuildNumber)'
+  #   # Publish build-info to JFrog Artifactory
+  # - task: JFrogPublishBuildInfo@1
+  #   inputs:
+  #     artifactoryConnection: 'girocicd'
+  #     buildName: '$(Build.DefinitionName)'
+  #     buildNumber: '$(Build.BuildNumber)'
 
   - task: SonarCloudPrepare@1
     inputs:
