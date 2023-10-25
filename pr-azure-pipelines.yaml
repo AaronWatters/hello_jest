@@ -32,6 +32,7 @@ steps:
       threads: '1'
       buildName: '$(Build.DefinitionName)'
       buildNumber: '$(Build.BuildNumber)'
+      arguments: '--legacy-peer-deps'
 
   - script: npm run lint
     displayName: 'npm run lint'
