@@ -3,6 +3,8 @@
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
 
+name: $(version).$(Build.BuildId)$(buildPipelineSuffix)
+
 trigger:
 - master
 
@@ -10,12 +12,28 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: '10.x'
-  displayName: 'Install Node.js'
+  - script: |
+      echo "##vso[build.addbuildtag]version=$(version).$(Build.BuildId)$(buildPipelineSuffix)"
+    displayName: 'Set Build Instance Number'
 
-- script: |
-    npm install
-    npm run build
-  displayName: 'npm install and build'
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '10.x'
+    displayName: 'Install Node.js'
+  
+  - script: |
+      npm install
+      npm run build
+    displayName: 'npm install and build'
+
+  - task: ArchiveFiles@2
+    condition: always()
+    displayName: 'Archive files'
+    inputs:
+      rootFolderOrFile: '$(Build.Repository.LocalPath)'
+      includeRootFolder: True
+      verbose: true
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish artifact'
+    condition: succeededOrFailed()
