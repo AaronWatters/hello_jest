@@ -29,7 +29,7 @@ steps:
     inputs:
       command: 'install'
       artifactoryService: 'girocicd.jfrog.io'
-      sourceRepo: 'dailyweb-npm-remote'
+      sourceRepo: 'dailyweb-npm'
       workingFolder: '/'
       collectBuildInfo: true
       threads: '1'
