@@ -20,112 +20,56 @@ steps:
 
   - task: NodeTool@0
     inputs:
-      versionSpec: '16.x'
+      versionSpec: '18.x'
     displayName: 'Install Node.js'
+
   - task: JFrogNpm@1
     inputs:
       command: 'install'
       artifactoryConnection: 'girocicd.jfrog.io.v2'
       sourceRepo: 'dailyweb-npm'
-      workingFolder: '/'
-      arguments: 'mynpmargs'
       collectBuildInfo: true
       threads: '1'
       buildName: '$(Build.DefinitionName)'
       buildNumber: '$(Build.BuildNumber)'
-  # - task: ArtifactoryNpm@2
+
+  - script: npm run lint
+    displayName: 'npm run lint'
+
+  - script: npm run test
+    displayName: 'npm run test'
+
+  # - task: SonarCloudPrepare@1
   #   inputs:
-  #     command: 'install'
-  #     artifactoryService: 'girocicd.jfrog.io'
-  #     sourceRepo: 'dailyweb-npm'
-  #     workingFolder: '/'
-  #     collectBuildInfo: true
-  #     threads: '1'
-  #     buildName: '$(Build.DefinitionName)'
-  #     buildNumber: '$(Build.BuildNumber)'
-  # - script: |
-  #     npm install
-  #   displayName: 'npm install'
+  #     SonarCloud: 'girocicd.sonarcloud.io'
+  #     organization: 'spoulingiro000'
+  #     scannerMode: 'CLI'
+  #     configMode: 'manual'
+  #     cliProjectKey: 'SPoulinGiro000_hello_jest'
+  #     cliProjectName: 'SPoulinGiro000_hello_jest'
+  #     cliProjectVersion: '$(Build.BuildNumber)'
+  #     cliSources: '.'
+  #     extraProperties: |
+  #       # Additional properties that will be passed to the scanner, 
+  #       # Put one key=value per line, example:
+  #       # sonar.exclusions=**/*.bin
+  #       sonar.sources=.
+  #       sonar.testExecutionReportPaths=reports/test-reporter.xml
+  #       sonar.javascript.lcov.reportPaths=reports/lcov.info
+  #       sonar.test.inclusions=**/*.test.js
+  #       sonar.exclusions=node_modules/**/*, reports/**/*
+  #       sonar.language=js
+  #       # sonar.sourceEncoding=UTF-8
+  #       #sonar.host.url=https://sonarcloud.io
 
-  # - task: JFrogNpm@1
+  # - task: SonarCloudPublish@1
   #   inputs:
-  #   # Resolve dependencies from JFrog Artifactory
-  #     command: 'install'
-  #     # Configure JFrog Artifactory repositories
-  #     artifactoryConnection: 'girocicd'
-  #     sourceRepo: 'dailyweb-npm'
-  #     collectBuildInfo: true
-  #     threads: '1'
-  #     buildName: '$(Build.DefinitionName)'
-  #     buildNumber: '$(Build.BuildNumber)'
-  # - task: JFrogNpm@1
+  #     pollingTimeoutSec: '300'
+
+  # - task: ArchiveFiles@2
+  #   condition: always()
+  #   displayName: 'Archive files'
   #   inputs:
-  #   # Deploy *.tar.gz to JFrog Artifactory
-  #     command: 'pack and publish'
-  #     artifactoryConnection: 'girocicd'
-  #     targetRepo: 'dailyweb-npm'
-  #     collectBuildInfo: true
-  #     buildName: '$(Build.DefinitionName)'
-  #     buildNumber: '$(Build.BuildNumber)'
-  #   # Publish build-info to JFrog Artifactory
-  # - task: JFrogPublishBuildInfo@1
-  #   inputs:
-  #     artifactoryConnection: 'girocicd'
-  #     buildName: '$(Build.DefinitionName)'
-  #     buildNumber: '$(Build.BuildNumber)'
-
-  - task: SonarCloudPrepare@1
-    inputs:
-      SonarCloud: 'girocicd.sonarcloud.io'
-      organization: 'spoulingiro000'
-      scannerMode: 'CLI'
-      configMode: 'manual'
-      cliProjectKey: 'SPoulinGiro000_hello_jest'
-      cliProjectName: 'SPoulinGiro000_hello_jest'
-      cliProjectVersion: '$(Build.BuildNumber)'
-      cliSources: '.'
-      extraProperties: |
-        # Additional properties that will be passed to the scanner, 
-        # Put one key=value per line, example:
-        # sonar.exclusions=**/*.bin
-        sonar.sources=.
-        sonar.testExecutionReportPaths=reports/test-reporter.xml
-        sonar.javascript.lcov.reportPaths=reports/lcov.info
-        sonar.test.inclusions=**/*.test.js
-        sonar.exclusions=node_modules/**/*, reports/**/*
-        sonar.language=js
-        # sonar.sourceEncoding=UTF-8
-        #sonar.host.url=https://sonarcloud.io
-
-  - script: |
-      npm run build
-      ls -la
-    displayName: 'npm build'
-
-  - task: ArtifactoryXrayScan@1
-    inputs:
-      artifactoryService: 'girocicd.npm.remote.jfrog.io'
-      buildName: '$(Build.DefinitionName)'
-      buildNumber: '$(Build.BuildNumber)'
-      allowFailBuild: true
-
-  - script: |
-      npm run test
-      ls -la
-    displayName: 'npm test'
-
-  - task: SonarCloudPublish@1
-    inputs:
-      pollingTimeoutSec: '300'
-
-  - task: ArchiveFiles@2
-    condition: always()
-    displayName: 'Archive files'
-    inputs:
-      rootFolderOrFile: '$(Build.Repository.LocalPath)'
-      includeRootFolder: True
-      verbose: true
-
-  - task: PublishBuildArtifacts@1
-    displayName: 'Publish artifact'
-    condition: succeededOrFailed()
+  #     rootFolderOrFile: '$(Build.Repository.LocalPath)'
+  #     includeRootFolder: True
+  #     verbose: true
