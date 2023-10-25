@@ -24,17 +24,27 @@ steps:
     inputs:
       versionSpec: '10.x'
     displayName: 'Install Node.js'
-
-  - task: ArtifactoryNpm@2
+  - task: JFrogNpm@1
     inputs:
       command: 'install'
-      artifactoryService: 'girocicd.jfrog.io'
+      artifactoryConnection: 'girocicd.jfrog.io.v2'
       sourceRepo: 'dailyweb-npm'
       workingFolder: '/'
+      arguments: 'mynpmargs'
       collectBuildInfo: true
       threads: '1'
       buildName: '$(Build.DefinitionName)'
       buildNumber: '$(Build.BuildNumber)'
+  # - task: ArtifactoryNpm@2
+  #   inputs:
+  #     command: 'install'
+  #     artifactoryService: 'girocicd.jfrog.io'
+  #     sourceRepo: 'dailyweb-npm'
+  #     workingFolder: '/'
+  #     collectBuildInfo: true
+  #     threads: '1'
+  #     buildName: '$(Build.DefinitionName)'
+  #     buildNumber: '$(Build.BuildNumber)'
   # - script: |
   #     npm install
   #   displayName: 'npm install'
