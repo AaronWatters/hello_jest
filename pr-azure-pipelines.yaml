@@ -67,6 +67,13 @@ steps:
       ls -la
     displayName: 'npm build'
 
+  - task: ArtifactoryXrayScan@1
+    inputs:
+      artifactoryService: 'girocicd.npm.remote.jfrog.io'
+      buildName: '$(Build.DefinitionName)'
+      buildNumber: '$(Build.BuildNumber)'
+      allowFailBuild: true
+
   - script: |
       npm run test
       ls -la
