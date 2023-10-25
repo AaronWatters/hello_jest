@@ -5,8 +5,6 @@
 
 name: $(version).$(Build.BuildId)$(buildPipelineSuffix)
 
-# trigger:
-# - master
 pr:
   branches:
     include:
@@ -22,7 +20,7 @@ steps:
 
   - task: NodeTool@0
     inputs:
-      versionSpec: '10.x'
+      versionSpec: '16.x'
     displayName: 'Install Node.js'
   - task: JFrogNpm@1
     inputs:
