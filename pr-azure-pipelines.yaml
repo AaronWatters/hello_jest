@@ -1,0 +1,76 @@
+# Node.js
+# Build a general Node.js project with npm.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+name: $(version).$(Build.BuildId)$(buildPipelineSuffix)
+
+pr:
+  branches:
+    include:
+    - master  # '*'' must single quote since "*" is a YAML reserved character; we want a string
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+  - script: |
+      echo "##vso[build.addbuildtag]version=$(version).$(Build.BuildId)$(buildPipelineSuffix)"
+    displayName: 'Set Build Instance Number'
+
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '18.x'
+    displayName: 'Install Node.js'
+
+  - task: JFrogNpm@1
+    inputs:
+      command: 'install'
+      artifactoryConnection: 'girocicd.jfrog.io.v2'
+      sourceRepo: 'dailyweb-npm'
+      collectBuildInfo: true
+      threads: '1'
+      buildName: '$(Build.DefinitionName)'
+      buildNumber: '$(Build.BuildNumber)'
+      arguments: '--legacy-peer-deps'
+
+  - script: npm run lint
+    displayName: 'npm run lint'
+
+  - script: npm run test
+    displayName: 'npm run test'
+
+  # - task: SonarCloudPrepare@1
+  #   inputs:
+  #     SonarCloud: 'girocicd.sonarcloud.io'
+  #     organization: 'spoulingiro000'
+  #     scannerMode: 'CLI'
+  #     configMode: 'manual'
+  #     cliProjectKey: 'SPoulinGiro000_hello_jest'
+  #     cliProjectName: 'SPoulinGiro000_hello_jest'
+  #     cliProjectVersion: '$(Build.BuildNumber)'
+  #     cliSources: '.'
+  #     extraProperties: |
+  #       # Additional properties that will be passed to the scanner, 
+  #       # Put one key=value per line, example:
+  #       # sonar.exclusions=**/*.bin
+  #       sonar.sources=.
+  #       sonar.testExecutionReportPaths=reports/test-reporter.xml
+  #       sonar.javascript.lcov.reportPaths=reports/lcov.info
+  #       sonar.test.inclusions=**/*.test.js
+  #       sonar.exclusions=node_modules/**/*, reports/**/*
+  #       sonar.language=js
+  #       # sonar.sourceEncoding=UTF-8
+  #       #sonar.host.url=https://sonarcloud.io
+
+  # - task: SonarCloudPublish@1
+  #   inputs:
+  #     pollingTimeoutSec: '300'
+
+  # - task: ArchiveFiles@2
+  #   condition: always()
+  #   displayName: 'Archive files'
+  #   inputs:
+  #     rootFolderOrFile: '$(Build.Repository.LocalPath)'
+  #     includeRootFolder: True
+  #     verbose: true
